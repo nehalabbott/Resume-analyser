@@ -2,9 +2,6 @@
 
 > **AI-powered resume screening, job fit analysis, and career coaching — built with React, FastAPI & Claude.**
 
-Built as a full-stack project for the BTech AI & Data Engineering programme at IIT Ropar.
-
----
 
 ## Features
 
