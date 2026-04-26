@@ -3,8 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import logging
 import os
 
-from resume_parser import extract_text_from_pdf
-from analyzer import analyze_resume_vs_jd, analyze_job_fit
+from backend.resume_parser import extract_text_from_pdf
+from backend.analyzer import analyze_resume_vs_jd, analyze_job_fit
 
 app = FastAPI(title="AI Resume Screener", version="2.0.0")
 
