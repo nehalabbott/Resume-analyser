@@ -8,22 +8,28 @@ const TABS = [
     label: 'Resume Screener',
     icon: (
       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
       </svg>
     ),
-    description: 'Match your resume to a job description',
   },
   {
     id: 'jobfit',
     label: 'Job Fit Finder',
     icon: (
       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+        />
       </svg>
     ),
-    description: 'Discover your best-fit career roles',
   },
 ]
 
@@ -31,9 +37,21 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('screener')
 
   return (
-    <div className="min-h-screen relative">
-      {/* Ambient background */}
-      <div className="mesh-bg" />
+    <div
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        background:
+          'linear-gradient(135deg, #140014 0%, #250028 30%, #3a0a3a 60%, #1a001f 100%)',
+      }}
+    >
+      {/* Pink glow background */}
+      <div
+        className="absolute inset-0 opacity-30"
+        style={{
+          background:
+            'radial-gradient(circle at top left, #ff4fd8 0%, transparent 25%), radial-gradient(circle at bottom right, #ff66c4 0%, transparent 25%)',
+        }}
+      />
 
       <div className="relative z-10">
         {/* Header */}
@@ -41,60 +59,96 @@ export default function App() {
           <div className="flex items-center justify-between mb-10">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #6366F1, #22D3EE)' }}>
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5}
-                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+              <div
+                className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #ff4fd8, #ff7ad9)',
+                }}
+              >
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
                 </svg>
               </div>
-              <span className="font-display font-bold text-xl text-white tracking-tight">
-                Resume<span className="gradient-text">AI</span>
-              </span>
-            </div>
 
-            {/* Powered-by badge */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full"
-              style={{ background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)' }}>
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-xs font-body text-slate-400">Powered by Claude</span>
+              <span className="font-bold text-2xl text-white tracking-tight">
+                Resume
+                <span
+                  style={{
+                    background:
+                      'linear-gradient(135deg, #ff4fd8, #ff9de6)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  AI
+                </span>
+              </span>
             </div>
           </div>
 
-          {/* Hero text */}
-          <div className="text-center mb-10">
-            <h1 className="font-display font-extrabold text-5xl md:text-6xl text-white mb-4 leading-none tracking-tight">
-              Land your dream role<br />
-              <span className="gradient-text">with AI precision.</span>
+          {/* Hero */}
+          <div className="text-center mb-12">
+            <h1 className="font-extrabold text-5xl md:text-7xl text-white mb-6 leading-tight">
+              Land your dream role
+              <br />
+              <span
+                style={{
+                  background:
+                    'linear-gradient(135deg, #ff4fd8, #ff9de6)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                with AI precision.
+              </span>
             </h1>
-            <p className="font-body text-slate-400 text-lg max-w-xl mx-auto">
-              Get a detailed ATS score, skill gap analysis, personalised action plan,
-              and curated learning resources — all in seconds.
+
+            <p className="text-pink-100 text-lg max-w-2xl mx-auto leading-relaxed">
+              Get a detailed ATS score, skill gap analysis, and personalised
+              action plan — all in seconds.
             </p>
           </div>
 
-          {/* Tab switcher */}
-          <div className="flex justify-center mb-0">
-            <div className="flex p-1 gap-1 rounded-2xl"
+          {/* Tabs */}
+          <div className="flex justify-center mb-2">
+            <div
+              className="flex p-1.5 gap-2 rounded-2xl"
               style={{
-                background: 'rgba(10,15,36,0.8)',
-                border: '1px solid rgba(99,102,241,0.12)',
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.08)',
                 backdropFilter: 'blur(12px)',
-              }}>
+              }}
+            >
               {TABS.map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-5 py-3 rounded-xl font-display font-medium text-sm transition-all duration-200 ${
+                  className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
                     activeTab === tab.id
                       ? 'text-white'
-                      : 'text-slate-500 hover:text-slate-300'
+                      : 'text-pink-200 hover:text-white'
                   }`}
-                  style={activeTab === tab.id ? {
-                    background: 'linear-gradient(135deg, rgba(99,102,241,0.3), rgba(34,211,238,0.1))',
-                    border: '1px solid rgba(99,102,241,0.3)',
-                    boxShadow: '0 4px 16px rgba(99,102,241,0.15)',
-                  } : {}}
+                  style={
+                    activeTab === tab.id
+                      ? {
+                          background:
+                            'linear-gradient(135deg, #ff4fd8, #ff7ad9)',
+                          boxShadow:
+                            '0 8px 24px rgba(255, 79, 216, 0.35)',
+                        }
+                      : {}
+                  }
                 >
                   {tab.icon}
                   {tab.label}
@@ -104,17 +158,12 @@ export default function App() {
           </div>
         </header>
 
-        {/* Main content */}
-        <main className="px-4 py-8 max-w-7xl mx-auto">
+        {/* Main */}
+        <main className="px-4 py-10 max-w-7xl mx-auto">
           {activeTab === 'screener' && <ResumeScreener />}
           {activeTab === 'jobfit' && <JobFitFinder />}
         </main>
 
-        {/* Footer */}
-        <footer className="text-center py-8 text-slate-600 text-sm font-body">
-          <div className="divider mb-6 max-w-md mx-auto" />
-          Built with FastAPI · React · Claude AI
-        </footer>
       </div>
     </div>
   )
