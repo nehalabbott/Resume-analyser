@@ -46,16 +46,12 @@ const PLAN_PHASES = [
   { key: 'day_90',   label: '90 Days',    color: '#34D399', icon: '🏆' },
 ]
 
-const RESOURCE_ICONS = {
-  Course: '🎓', Book: '📖', Project: '⚙️',
-  Tutorial: '📝', YouTube: '▶️',
-}
 
 export default function AnalysisResult({ data }) {
   const {
     overall_score, score_breakdown, verdict,
     matched_skills, missing_skills, strengths,
-    improvements, learning_resources, action_plan, ats_tips,
+    improvements, action_plan, ats_tips,
   } = data
 
   return (
@@ -144,34 +140,6 @@ export default function AnalysisResult({ data }) {
           </div>
         </Section>
       </div>
-
-      {/* Learning Resources */}
-      {(learning_resources || []).length > 0 && (
-        <Section title="📚 Learning Resources by Skill">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {learning_resources.map((lr, i) => (
-              <div key={i} className="stagger-item rounded-xl overflow-hidden"
-                style={{ background: 'rgba(10,15,36,0.7)', border: '1px solid rgba(99,102,241,0.1)' }}>
-                <div className="px-4 py-2.5"
-                  style={{ background: 'rgba(99,102,241,0.08)', borderBottom: '1px solid rgba(99,102,241,0.1)' }}>
-                  <span className="font-display font-semibold text-indigo-400 text-sm">{lr.skill}</span>
-                </div>
-                <div className="p-3 flex flex-col gap-2">
-                  {(lr.resources || []).map((r, j) => (
-                    <div key={j} className="flex items-start gap-2">
-                      <span className="text-sm mt-0.5">{RESOURCE_ICONS[r.type] || '📌'}</span>
-                      <div>
-                        <p className="font-body font-medium text-slate-300 text-xs">{r.name}</p>
-                        <p className="text-slate-600 text-xs">{r.platform} · {r.duration}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-      )}
 
       {/* 90-day Action Plan */}
       {action_plan && (

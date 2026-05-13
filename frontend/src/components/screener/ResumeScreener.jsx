@@ -155,7 +155,6 @@ const FEATURES = [
   { icon: '🎯', title: 'ATS Score (0–100)', desc: 'Overall match score broken down into skills, experience, education, and keyword density.' },
   { icon: '✅', title: 'Matched vs. Missing Skills', desc: 'See exactly which required skills you have and which ones you need to build.' },
   { icon: '💪', title: 'Strengths & Improvements', desc: 'Your top advantages for this role and high-impact things to fix before applying.' },
-  { icon: '📚', title: 'Curated Learning Resources', desc: 'Hand-picked courses, books, and projects for every skill gap — with time estimates.' },
   { icon: '🗓️', title: '90-Day Action Plan', desc: 'A concrete week-by-week plan to go from where you are to ready-to-apply.' },
   { icon: '🤖', title: 'ATS Optimisation Tips', desc: 'Specific tweaks to your resume formatting and language to pass automated filters.' },
 ]

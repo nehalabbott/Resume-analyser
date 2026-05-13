@@ -2,6 +2,7 @@ from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 import os
+import re
 
 from resume_parser import extract_text_from_pdf
 from analyzer import analyze_resume_vs_jd, analyze_job_fit
@@ -41,8 +42,23 @@ async def analyze_resume(
         if not resume_text.strip():
             raise ValueError("Could not extract text from PDF. It may be image-only or scanned.")
 
-        if not job_description.strip():
-            raise ValueError("Job description cannot be empty.")
+        jd_clean = job_description.strip()
+
+        if len(jd_clean) < 80:
+            raise ValueError("Job description is too short.")
+
+        # Detect gibberish/random text
+        words = jd_clean.split()
+
+        valid_words = sum(
+            1 for w in words
+            if re.match(r"^[A-Za-z0-9+#.\-]{2,}$", w)
+        )
+
+        ratio = valid_words / max(len(words), 1)
+
+        if ratio < 0.6:
+            raise ValueError("Invalid or gibberish job description.")
 
         logger.info(f"Analyzing resume: {file.filename} | JD length: {len(job_description)}")
         analysis = analyze_resume_vs_jd(resume_text, job_description)
