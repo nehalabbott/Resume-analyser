@@ -2,8 +2,20 @@
 - Docker Desktop installed
 - Kubernetes enabled in Docker Desktop
 - kubectl installed
+- make sure .env contains groq api key
 
->make sure .env contains groq api key
+
+## TO RUN USING DOCKER
+cd Resume-analyser
+docker-compose up --build
+>Frontend
+http://localhost:3000
+>Backend Swagger
+http://localhost:8000/docs
+
+
+## TO RUN USING KUBERNETES
+
 # if change in .env run this (no rebuild needed)
 kubectl delete secret resumeai-secret
 kubectl create secret generic resumeai-secret --from-env-file=.env
