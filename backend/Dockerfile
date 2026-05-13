@@ -1,4 +1,4 @@
-#using lightweight Python 3.11 image as base
+#using Python 3.11 image as base
 FROM python:3.11-slim
 
 #setting working directory inside container
@@ -21,8 +21,3 @@ COPY . .
 EXPOSE 8000
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-
-#Run FastAPI app using uvicorn server
-# main:app means:
-# file=main.py
-# FastAPI object=app
