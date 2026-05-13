@@ -23,7 +23,7 @@ export default function ScoreGauge({ score = 0 }) {
   const [colors] = useState(getColor(score))
   const gradId = 'sg-grad'
 
-  // Count-up effect
+  //count-up effect
   useEffect(() => {
     let frame
     const start = performance.now()

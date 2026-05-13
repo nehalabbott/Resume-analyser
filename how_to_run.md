@@ -24,12 +24,8 @@ kubectl delete pod -l app=backend
 # To run the project using kubernetes-
 cd Resume-analyser
 
->Verify Kubernetes cluster
-kubectl cluster-info
-
->IF code change, rebuild images
-docker build -t resumeai-frontend ./frontend
-docker build -t resumeai-backend ./backend
+>build images
+docker-compose build
 
 >Deploy application
 kubectl apply -f kubernetes/
@@ -48,6 +44,12 @@ http://localhost:3000
 
 >backend at
 http://localhost:8000/docs
+
+
+
+## to verify working of ray
+docker ps
+docker logs <backend-container-id>
 
 
 

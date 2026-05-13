@@ -1,3 +1,5 @@
+// frontend UI
+
 import { useState } from 'react'
 import ResumeScreener from './components/screener/ResumeScreener'
 import JobFitFinder from './components/jobfit/JobFitFinder'

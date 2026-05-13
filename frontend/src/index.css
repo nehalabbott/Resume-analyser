@@ -49,10 +49,6 @@
 
 @layer components {
 
-  /* =========================
-     Cards
-  ========================= */
-
   .card {
     @apply rounded-3xl border;
 
@@ -72,10 +68,8 @@
       0 0 60px rgba(255,79,216,0.12);
   }
 
-  /* =========================
-     Buttons
-  ========================= */
-
+/*buttons
+*/
   .btn-primary {
     @apply font-semibold text-white rounded-2xl px-6 py-3 transition-all duration-300;
 
@@ -104,9 +98,6 @@
     box-shadow: none;
   }
 
-  /* =========================
-     Gradient Text
-  ========================= */
 
   .gradient-text {
     background:
@@ -122,9 +113,6 @@
     background-clip: text;
   }
 
-  /* =========================
-     Tags
-  ========================= */
 
   .tag-matched {
     @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium;
@@ -153,9 +141,7 @@
     color: #FBBF24;
   }
 
-  /* =========================
-     Progress Bars
-  ========================= */
+
 
   .progress-bar {
     @apply h-2 rounded-full overflow-hidden;
@@ -175,9 +161,6 @@
   }
 }
 
-/* =========================
-   Mesh Background
-========================= */
 
 .mesh-bg {
   position: fixed;
@@ -233,9 +216,6 @@
   animation: drift2 22s ease-in-out infinite alternate;
 }
 
-/* =========================
-   Animations
-========================= */
 
 @keyframes drift1 {
   0% {
@@ -257,9 +237,6 @@
   }
 }
 
-/* =========================
-   Dropzone
-========================= */
 
 .dropzone-active {
   border-color: rgba(255,79,216,0.7) !important;
@@ -268,18 +245,13 @@
     rgba(255,79,216,0.08) !important;
 }
 
-/* =========================
-   Gauge Animation
-========================= */
 
 .gauge-track {
   transition:
     stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1);
 }
 
-/* =========================
-   Fade Up Animation
-========================= */
+
 
 .stagger-item {
   animation: fadeUp 0.4s ease forwards;
@@ -330,9 +302,6 @@
   }
 }
 
-/* =========================
-   Loader Ring
-========================= */
 
 @keyframes ping-ring {
   75%, 100% {
@@ -341,9 +310,6 @@
   }
 }
 
-/* =========================
-   Divider
-========================= */
 
 .divider {
   height: 1px;

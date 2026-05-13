@@ -24,7 +24,7 @@ app.add_middleware(
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-#start ray: ray helps run tasks in parallel using workers
+#start ray, ray helps run tasks in parallel using workers
 #avoids errors during testing/reloading
 ray.init(ignore_reinit_error=True)
 
