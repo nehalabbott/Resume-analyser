@@ -18,9 +18,31 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 8000
+            # 1. ADDED: Expose Ray Dashboard port
+            - containerPort: 8265 
           env:
             - name: GROQ_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: resumeai-secret
                   key: GROQ_API_KEY
+          
+          # 2. ADDED: Give Ray enough CPU cores to actually run in parallel
+          resources:
+            requests:
+              cpu: "2"       # Request at least 2 cores
+              memory: "2Gi"
+            limits:
+              cpu: "4"       # Allow up to 4 cores
+              memory: "4Gi"
+              
+          # 3. ADDED: Mount the shared memory volume to the container
+          volumeMounts:
+            - mountPath: /dev/shm
+              name: dshm
+
+      # 4. ADDED: Define the shared memory volume (Memory-backed emptyDir)
+      volumes:
+        - name: dshm
+          emptyDir:
+            medium: Memory
