@@ -6,7 +6,7 @@ import re
 import ray
 
 from resume_parser import extract_text_from_pdf
-from ray_worker import ResumeAnalysisWorker   # ← new import
+from ray_worker import ResumeAnalysisWorker
 
 #create fastapi app
 app = FastAPI(title="AI Resume Screener", version="2.0.0")
@@ -28,24 +28,22 @@ logger = logging.getLogger(__name__)
 #avoids errors during testing/reloading
 ray.init(ignore_reinit_error=True)
 
-#create multiple worker actors
 #each worker can process resume analysis independently
-NUM_WORKERS = 3
-workers = [ResumeAnalysisWorker.remote() for _ in range(NUM_WORKERS)]
+workers=[ResumeAnalysisWorker.remote() for _ in range(3)]
 
-logger.info(f"Ray initialised with {NUM_WORKERS} workers.")
+logger.info(f"Ray initialised with {3} workers.")
 
-def _get_worker(request_id: int) -> ResumeAnalysisWorker:
-    return workers[request_id % NUM_WORKERS]
+def get_worker(request_id: int) -> ResumeAnalysisWorker:
+    return workers[request_id %3]
 
-_request_counter = 0
-
+counter =0 #no of requests
+ 
 @app.post("/api/analyze")
 async def analyze_resume(
     file: UploadFile = File(...),
     job_description: str = Form(...)
 ):
-    global _request_counter
+    global counter
 
     #validate file type
     if not file.filename.lower().endswith(".pdf"):
@@ -53,9 +51,9 @@ async def analyze_resume(
 
     try:
         #read pdf as bytes
-        file_bytes = await file.read()
+        pdf_data= await file.read()
         #extract text
-        resume_text = extract_text_from_pdf(file_bytes)
+        resume_text = extract_text_from_pdf(pdf_data)
         
         if not resume_text.strip():
             raise ValueError("PDF does not contain extractable text, try again!")
@@ -67,7 +65,7 @@ async def analyze_resume(
         #validating JD quality 
         words =jd_clean.split()
 
-        valid_words = sum(
+        valid_words =sum(
             1 for w in words 
             if re.match(r"^[A-Za-z0-9+#.\-]{2,}$", w)
         )
@@ -78,8 +76,8 @@ async def analyze_resume(
         logger.info(f"Analyzing resume: {file.filename} | JD length: {len(job_description)}")
 
         #select worker and move to next for future requests
-        worker=_get_worker(_request_counter)
-        _request_counter+=1
+        worker=get_worker(counter)
+        counter+=1
 
         future =worker.analyze_vs_jd.remote(
             resume_text, 
@@ -103,22 +101,22 @@ async def analyze_resume(
 
 @app.post("/api/job-fit")
 async def job_fit_analysis(file: UploadFile = File(...)):
-    global _request_counter
+    global counter
 
     if not file.filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Please upload pdfs only")
 
     try:
-        file_bytes = await file.read() #read
-        resume_text = extract_text_from_pdf(file_bytes) #extract
+        pdf_data =await file.read() #read
+        resume_text =extract_text_from_pdf(pdf_data) #extract
 
         if not resume_text.strip():
             raise ValueError("pdf text not extractable")
 
         logger.info(f"Job-fit analysis for: {file.filename}")
         
-        worker = _get_worker(_request_counter)
-        _request_counter += 1
+        worker = get_worker(counter)
+        counter+=1
 
         future =worker.analyze_fit.remote(resume_text)
         result =ray.get(future)
