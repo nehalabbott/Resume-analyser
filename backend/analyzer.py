@@ -12,8 +12,6 @@ logger = logging.getLogger(__name__)
 # =========================
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-print(repr(GROQ_API_KEY))
-print(len(GROQ_API_KEY))
 
 if not GROQ_API_KEY:
     raise ValueError("GROQ_API_KEY not found in environment variables")
@@ -103,18 +101,12 @@ JOB DESCRIPTION:
 Schema:
 
 {{
-  "overall_score": <integer 0-100>,
-
-  "score_breakdown": {{
-    "skills_match": <integer 0-100>,
-    "experience_relevance": <integer 0-100>,
-    "education_fit": <integer 0-100>,
-    "keyword_density": <integer 0-100>
-  }},
-
-  "verdict": "<One sentence summary>",
-
-  "matched_skills": ["<skill>"],
+  "matched_skills": [
+  {{
+    "skill": "<skill>",
+    "importance": "<High|Medium|Low>"
+  }}
+  ],
 
   "missing_skills": [
     {{
@@ -123,6 +115,9 @@ Schema:
       "why_needed": "<reason>"
     }}
   ],
+
+  "experience_relevance": <integer 0-100>,
+  "education_fit": <integer 0-100>,
 
   "strengths": [
     "<strength 1>",
@@ -170,7 +165,47 @@ Schema:
 
         raw = response.choices[0].message.content
 
-        return _safe_json_loads(raw)
+        data = _safe_json_loads(raw)
+        matched = len(data.get("matched_skills", []))
+        missing = len(data.get("missing_skills", []))
+
+        weights = {
+            "High": 3,
+            "Medium": 2,
+            "Low": 1
+        }
+
+        matched_points = sum(
+            weights.get(skill["importance"], 1)
+            for skill in data.get("matched_skills", [])
+        )
+
+        missing_points = sum(
+            weights.get(skill["importance"], 1)
+            for skill in data.get("missing_skills", [])
+        )
+
+        total_points = matched_points + missing_points
+
+        skills_score = int((matched_points / total_points) * 100) if total_points > 0 else 0
+
+        experience_score = data.get("experience_relevance", 50)
+        education_score = data.get("education_fit", 50)
+    
+        overall_score = int(
+            (0.5 * skills_score) +
+            (0.3 * experience_score) +
+            (0.2 * education_score)
+        )
+
+        data["overall_score"] = overall_score
+
+        data["score_breakdown"] = {
+            "skills_match": skills_score,
+            "experience_relevance": experience_score,
+            "education_fit": education_score,
+        }
+        return data
 
     except Exception as e:
 
