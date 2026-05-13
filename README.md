@@ -5,7 +5,7 @@ AI-powered resume screening and job-fit analysis built using React, FastAPI, Gro
 
 ## Features
 
-### Resume Screener
+## Resume Screener
 - Upload resume PDF + job description
 - ATS score with breakdown
 - Matched & missing skills
