@@ -12,6 +12,8 @@ logger = logging.getLogger(__name__)
 # =========================
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+print(repr(GROQ_API_KEY))
+print(len(GROQ_API_KEY))
 
 if not GROQ_API_KEY:
     raise ValueError("GROQ_API_KEY not found in environment variables")
