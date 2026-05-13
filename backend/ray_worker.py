@@ -1,11 +1,7 @@
 import ray
 from analyzer import analyze_resume_vs_jd, analyze_job_fit
 
-
-# ─────────────────────────────────────────────────────────
-#  Ray Actor — each instance runs independently as its own
-#  worker process (just like the lecture: @ray.remote class)
-# ─────────────────────────────────────────────────────────
+# Ray Actor-> each instance runs independently as its own worker process 
 
 @ray.remote
 class ResumeAnalysisWorker:

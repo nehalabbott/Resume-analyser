@@ -115,7 +115,7 @@ async def job_fit_analysis(file: UploadFile = File(...)):
 
         logger.info(f"Job-fit analysis for: {file.filename}")
         
-        worker = get_worker(counter)
+        worker =get_worker(counter)
         counter+=1
 
         future =worker.analyze_fit.remote(resume_text)
